@@ -1,11 +1,4 @@
-lab1/target/*
-lab1/.idea/*
+**/target/*
+**/.idea/*
+.DS_Store
 
-lab2/target/*
-lab2/.idea/*
-
-lab3/target/*
-lab3/.idea/*
-
-lab4/target/*
-lab4/.idea/*
