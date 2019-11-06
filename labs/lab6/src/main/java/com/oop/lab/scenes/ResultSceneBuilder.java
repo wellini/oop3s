@@ -19,6 +19,8 @@ public class ResultSceneBuilder {
     private static final int INIT_WIDTH = 600;
     private static final int INIT_HEIGHT = 400;
 
+    private static final String AGAIN_BUTTON_TITLE = "Try again";
+
     private Scene scene;
     private Title title;
     private Button button;
@@ -31,13 +33,11 @@ public class ResultSceneBuilder {
         title = new Title(bundle.get("title"));
 
         root.setBackground(new Background(new BackgroundFill(Palette.PRIMARY, CornerRadii.EMPTY, Insets.EMPTY)));
-        button = new Button("Try again");
+        button = new Button(AGAIN_BUTTON_TITLE);
     }
 
     public ResultSceneBuilder setOnUserInputEnd(EventHandler<Event> userInputEndHandler) {
-        button.setOnAction(actionEvent -> {
-            userInputEndHandler.handle(new Event(EventType.ROOT));
-        });
+        button.setOnAction(actionEvent -> userInputEndHandler.handle(new Event(EventType.ROOT)));
         return this;
     }
 
