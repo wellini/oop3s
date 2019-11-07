@@ -1,7 +1,6 @@
 package com.oop.lab;
 
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,15 +12,30 @@ public class App extends Application {
 
     private static final String INIT_TITLE = "Milan – Real Madrid score";
 
-    private int milanScore = 0;
-    private int realScore = 0;
+    private static final String PRIMARY_NAME = "AC Milan";
+    private static final String SECONDARY_NAME = "Real Madrid";
 
+    private int primaryScore = 0;
+    private int secondaryScore = 0;
 
     private static final int INIT_WIDTH = 600;
     private static final int INIT_HEIGHT = 400;
 
     private String makeResultText(int primary, int secondary){
         return "Result: " + primary + " x " + secondary;
+    }
+
+    private String makeLastScorerText(String lastScorer){
+        return "Last scorer: " + lastScorer;
+    }
+
+    private String makeWinnerText(String winner){
+        return "Winner: " + winner;
+    }
+
+    private String calcWinner(int primary, int secondary, String primaryName, String secondaryName){
+        if(primary == secondary) return "DRAW";
+        return primary > secondary ? primaryName : secondaryName;
     }
 
     public void start(Stage stage) throws Exception {
@@ -31,21 +45,27 @@ public class App extends Application {
 
 
         Label title = new Label("Milan – Real Madrid");
-        Label score = new Label("Result: 0 x 0");
+        Label score = new Label(makeResultText(primaryScore, secondaryScore));
+        Label lastScorer = new Label(makeLastScorerText("N/A"));
+        Label winner = new Label(makeWinnerText(calcWinner(primaryScore, secondaryScore, PRIMARY_NAME, SECONDARY_NAME)));
 
-        Button buttonMilan = new Button("AC Milan");
+        Button buttonMilan = new Button(PRIMARY_NAME);
         buttonMilan.setOnAction(actionEvent -> {
-            milanScore++;
-            score.setText(makeResultText(milanScore, realScore));
+            primaryScore++;
+            score.setText(makeResultText(primaryScore, secondaryScore));
+            lastScorer.setText(makeLastScorerText(PRIMARY_NAME));
+            winner.setText(makeWinnerText(calcWinner(primaryScore, secondaryScore, PRIMARY_NAME, SECONDARY_NAME)));
         });
 
-        Button buttonReal = new Button("Real Madrid");
+        Button buttonReal = new Button(SECONDARY_NAME);
         buttonReal.setOnAction(actionEvent -> {
-            realScore++;
-            score.setText(makeResultText(milanScore, realScore));
+            secondaryScore++;
+            score.setText(makeResultText(primaryScore, secondaryScore));
+            lastScorer.setText(makeLastScorerText(SECONDARY_NAME));
+            winner.setText(makeWinnerText(calcWinner(primaryScore, secondaryScore, PRIMARY_NAME, SECONDARY_NAME)));
         });
 
-        root.getChildren().addAll(title, score, buttonMilan, buttonReal);
+        root.getChildren().addAll(title, score, lastScorer, winner, buttonMilan, buttonReal);
 
         stage.setScene(scene);
         stage.show();
